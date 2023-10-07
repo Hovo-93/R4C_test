@@ -6,6 +6,10 @@ from R4C.celery import app
 
 @app.task
 def check_robot_is_availability():
+    """
+     Проверка робота в наличии
+    :return:
+    """
     for order in Order.objects.filter(is_pending=True):
         is_availability = Robot.objects.filter(serial=order.robot_serial, in_stock=True).exists()
         print(is_availability)
@@ -13,7 +17,11 @@ def check_robot_is_availability():
 
 
 @app.task
-def send_order_notification_dispatcher():
+def send_order_notification():
+    """
+        Функция которое отправляет уведомление клиенту
+    :return:
+    """
     for order in Order.objects.filter(is_pending=True):
         if order.is_pending:
 
