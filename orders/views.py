@@ -8,9 +8,6 @@ import json
 from django.http import JsonResponse
 
 
-# from django.core.mail import send_mail
-
-
 class CreateOrder(CreateView):
 
     def post(self, request, *args, **kwargs):
@@ -23,13 +20,7 @@ class CreateOrder(CreateView):
             is_availability = Robot.objects.filter(serial=robot_serial, in_stock=True).exists()  # True
 
             order = Order(customer=customer, robot_serial=robot_serial)
-            # serial,model= Robot.objects.filter(serial=robot_serial).values('version', 'model',
-            #                                                                ).distinct()
-            # # for entry in distinct_values:
-            # #     serial = entry['serial']
-            # #     model = entry['model']
-            # #     print(f"Serial: {serial}, Model: {model}")
-            # print(serial['version'],model['model'])
+
             if not is_availability:
                 order.is_pending = True
                 order.save()
