@@ -70,9 +70,6 @@ class UploadExelView(View):
 
             ws.append([entry['model'], entry['version'], entry['count']])
 
-        default_sheet = self.wb['Sheet']
-        self.wb.remove(default_sheet)
-
         xlsx_path = 'detailed.xlsx'
         self.wb.save(xlsx_path)
         return xlsx_path
