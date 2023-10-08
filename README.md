@@ -82,9 +82,9 @@ python manage.py runserver
 POST http://127.0.0.1:8000/api/add_robot/
 #BODY(json)
 {
-    {"model":"R2","version":"M2","created":"2023-10-05 23:59:59"},
-    {"model":"13","version":"XS","created":"2023-01-01 00:00:00"},
-    {"model":"X5","version":"LT","created":"2023-01-01 00:00:01"}
+    {"model":"R2","version":"M2","created":"2023-10-05 23:59:59","serial":"abc"},
+    {"model":"13","version":"XS","created":"2023-01-01 00:00:00","serial":"abd"},
+    {"model":"X5","version":"LT","created":"2023-01-01 00:00:01","serial":"abcde"}
 }
 ```
 ### 2. Скачивание по прямой ссылке Excel-файл со сводкой по суммарным показателям производства роботов
