@@ -29,9 +29,10 @@ class RobotCreateView(CreateView):
                     model = data['model']
                     version = data['version']
                     created = data['created']
+                    serial = data['serial']
 
                     robots_to_insert = [
-                        Robot(model=model, version=version, created=created)
+                        Robot(model=model, version=version, created=created,serial=serial)
                     ]
                     Robot.objects.bulk_create(robots_to_insert)
                 except ValidationError as e:
