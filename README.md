@@ -17,6 +17,12 @@
 Список технологий: Python, Django, db.sqlite3, Celery, Redis
 
 ## Подготовка и запуск проекта
+#### Проверьте установлен ли у вас Docker
+Прежде, чем приступать к работе, необходимо знать, что Docker установлен. Для этого достаточно ввести:
+```bash
+docker -v
+```
+Или скачайте [Docker Desktop](https://www.docker.com/products/docker-desktop) для Mac или Windows. [Docker Compose](https://docs.docker.com/compose) будет установлен автоматически. В Linux убедитесь, что у вас установлена последняя версия [Compose](https://docs.docker.com/compose/install/). Также вы можете воспользоваться официальной [инструкцией](https://docs.docker.com/engine/install/).
 
 #### Шаг 1. Клонируйте репозиторий себе на компьютер
 Введите команду:
@@ -57,13 +63,23 @@ FROM_EMAIL = ovo.aroyan@gmail.com
 ```python
   python manage.py createsuperuser
 ```
-
+#### Шаг 7. Запуск Redis через Docker
+```
+ Для Windows в CMD:
+    1.pull redis  
+    2.docker run -d -p 6379:6379 --name redis
+ 
+```
+#### Шаг 8. После успешной установки запускаем сервер 
+```python
+python manage.py runserver
+```
 ## Примеры
 Для формирования запросов и ответов использована программа [Postman](https://www.postman.com/).
 
 ### 1.API-endpoint, принимающий и обрабатывающий информацию в формате JSON
 ```json
-  POST http://127.0.0.1:8000/api/add_robot/
+POST http://127.0.0.1:8000/api/add_robot/
 #BODY(json)
 {
     {"model":"R2","version":"M2","created":"2023-10-05 23:59:59"},
@@ -75,7 +91,15 @@ FROM_EMAIL = ovo.aroyan@gmail.com
 ```html
   Переходим по ссылке http://127.0.0.1:8000/api/download_exel/
 ```
-### 3. Отправка уведомлений о налиии робота
+
+
+### 3. Отправка уведомлений о наличии робота
+####  Запуск Celery
+
+```
+   celery -A R4C worker --loglevel=info
+   celery -A R4C beat -l info 
+```
 ```json
 POST http://127.0.0.1:8000/api/order/
 
@@ -85,3 +109,6 @@ POST http://127.0.0.1:8000/api/order/
    "robot_serial": "ABC12"
 }
 ```
+## Пояснение к отправке уведомлений о наличии робота.
+#### для проверки корректности работы кода по части отправки уведомлений о наличии робота, необходимо после отправки POST
+#### запроса к http://127.0.0.1:8000/api/order/ , в админке в модели Robots поменять значение in_stock на Trueмотрено функция которое автоматически меняет значения в модели на True
